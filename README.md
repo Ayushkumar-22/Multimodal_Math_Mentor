@@ -174,9 +174,7 @@ math_mentor/
 
 - **Python 3.9 or higher** (3.10/3.11 recommended)
 - **pip** package manager
-- **API key** for either:
-  - [Anthropic](https://console.anthropic.com/) — Claude (recommended)
-  - [OpenAI](https://platform.openai.com/) — GPT-4
+- **API key** 
 - **Optional:** [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) binary (if using tesseract engine)
 
 ---
@@ -250,18 +248,6 @@ cp .env.example .env
 
 Open `.env` in any text editor and fill in your API key at minimum:
 
-```env
-# Minimum required — pick one:
-ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxx
-LLM_PROVIDER=anthropic
-LLM_MODEL=claude-opus-4-5
-
-# OR:
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxx
-LLM_PROVIDER=openai
-LLM_MODEL=gpt-4o
-```
-
 Full configuration reference is at the bottom of this document.
 
 ---
@@ -272,8 +258,8 @@ The `.env` file controls all runtime behaviour. The most important variables:
 
 ```env
 # Which LLM to use
-LLM_PROVIDER=anthropic           # anthropic | openai
-LLM_MODEL=claude-opus-4-5        # model name
+LLM_PROVIDER=#           
+LLM_MODEL=#        # model name
 
 # Which OCR engine
 OCR_ENGINE=easyocr               # easyocr | tesseract | both
@@ -329,9 +315,9 @@ streamlit run app.py --server.port 8080
 
 ### Text input
 
-1. Select **✏️ Text** mode in the radio buttons at the top
+1. Select **Text** mode in the radio buttons at the top
 2. Type your math problem, or pick one from the **sample problems** dropdown
-3. Click **🚀 Solve Problem**
+3. Click **Solve Problem**
 4. Results appear in five tabs (see below)
 
 **Example problems you can type:**
@@ -346,13 +332,13 @@ Find eigenvalues of [[2,1],[1,2]]
 
 ### Image input
 
-1. Select **🖼️ Image (OCR)** mode
+1. Select **Image (OCR)** mode
 2. Click **Browse files** and upload a JPG or PNG of your problem
-3. Click **🔍 Extract Text from Image**
+3. Click **Extract Text from Image**
 4. Review the extracted text — edit it if needed
    - If OCR confidence is below 0.6, a yellow **HITL warning** appears automatically
-5. Click **✅ Confirm Text**
-6. Click **🚀 Solve Problem**
+5. Click **Confirm Text**
+6. Click **Solve Problem**
 
 **Tips for good OCR:**
 - Use high contrast (dark ink on white paper)
@@ -362,13 +348,13 @@ Find eigenvalues of [[2,1],[1,2]]
 
 ### Audio input
 
-1. Select **🎤 Audio (ASR)** mode
+1. Select **Audio (ASR)** mode
 2. Upload a WAV, MP3, M4A, or OGG file
-3. Click **🎙️ Transcribe Audio**
+3. Click **Transcribe Audio**
 4. Review the transcript and correct any errors
    - Math phrases are auto-normalized: "square root of 16" → "√16", "x raised to the power 2" → "x^2"
-5. Click **✅ Confirm Transcript**
-6. Click **🚀 Solve Problem**
+5. Click **Confirm Transcript**
+6. Click **Solve Problem**
 
 ### Reading results
 
@@ -376,11 +362,11 @@ Results are shown in five tabs:
 
 | Tab | Contents |
 |-----|---------|
-| **📖 Explanation** | Concept overview, numbered steps with rationale, key formulas, common mistakes, final answer |
-| **🔢 Full Solution** | Complete unformatted solution text, SymPy tool output if used |
-| **🤖 Agent Trace** | Expandable card for each agent showing its input, decision, and output |
-| **📚 Retrieved Context** | Knowledge chunks retrieved from the vector store with relevance scores |
-| **✅ Verification** | Verifier confidence score, issues found, domain checks, HITL flag if triggered |
+| **Explanation** | Concept overview, numbered steps with rationale, key formulas, common mistakes, final answer |
+| **Full Solution** | Complete unformatted solution text, SymPy tool output if used |
+| **Agent Trace** | Expandable card for each agent showing its input, decision, and output |
+| **Retrieved Context** | Knowledge chunks retrieved from the vector store with relevance scores |
+| **Verification** | Verifier confidence score, issues found, domain checks, HITL flag if triggered |
 
 ### Providing feedback
 
@@ -479,7 +465,7 @@ Transforms the verified solution into a structured, student-friendly explanation
 | Low ASR confidence | `asr_confidence < ASR_CONFIDENCE_THRESHOLD` | Edit transcript, confirm |
 | Parser ambiguity | `needs_clarification == true` | Clarify problem, resubmit |
 | Low verifier confidence | `confidence < VERIFIER_CONFIDENCE_THRESHOLD` | Warning shown; user reviews solution |
-| Explicit user correction | User clicks ❌ Incorrect | Provide correct answer |
+| Explicit user correction | User clicks Incorrect | Provide correct answer |
 
 ### Memory System
 

@@ -1,0 +1,95 @@
+flowchart TD
+    subgraph INPUT["📥 Multimodal Input Layer"]
+        A1["🖼️ Image Upload\n(JPG/PNG)"]
+        A2["🎤 Audio Upload\n(WAV/MP3)"]
+        A3["✏️ Text Input"]
+    end
+
+    subgraph PROCESSING["🔄 Input Processing"]
+        B1["EasyOCR /\nTesseract"]
+        B2["Whisper ASR"]
+        B3["Direct Text"]
+    end
+
+    subgraph HITL_INPUT["👤 HITL Layer 1: Input Quality"]
+        C{"Confidence\nCheck"}
+        C1["Human Review\n& Correction"]
+    end
+
+    subgraph AGENTS["🤖 Multi-Agent System"]
+        D["🛡️ Guardrail Agent\n(Content Filter)"]
+        E["🔍 Parser Agent\n(Structuring)"]
+        F{"Needs\nClarification?"}
+        G["🗺️ Intent Router\n(Workflow Planning)"]
+        H["⚙️ Solver Agent\n(Core Solving)"]
+        I["✅ Verifier Agent\n(Correctness Check)"]
+        J["📖 Explainer Agent\n(Tutor Explanation)"]
+    end
+
+    subgraph RAG["📚 RAG Pipeline"]
+        K["ChromaDB\nVector Store"]
+        L["SentenceTransformers\nEmbeddings"]
+        M["20-Doc\nKnowledge Base"]
+    end
+
+    subgraph TOOLS["🔧 Computation Tools"]
+        N["SymPy\nSolver/Diff/Integrate"]
+    end
+
+    subgraph MEMORY["🧠 Memory & Learning"]
+        O["JSON Memory\nStore"]
+        P["Similar Problem\nRetrieval"]
+        Q["Correction\nPatterns"]
+    end
+
+    subgraph HITL_VERIFY["👤 HITL Layer 2: Verification"]
+        R{"Confidence\n< 0.75?"}
+        S["Human Review\nFlag"]
+    end
+
+    subgraph UI["🖥️ Streamlit UI"]
+        T["📖 Explanation Tab"]
+        U["🔢 Solution Tab"]
+        V["🤖 Agent Trace Tab"]
+        W["📚 RAG Context Tab"]
+        X["✅ Verification Tab"]
+        Y["💬 Feedback Buttons"]
+    end
+
+    A1 --> B1 --> C
+    A2 --> B2 --> C
+    A3 --> B3 --> C
+
+    C -->|Low Confidence| C1
+    C1 -->|Corrected| D
+    C -->|OK| D
+
+    D --> E
+    E --> F
+    F -->|Yes| C1
+    F -->|No| G
+    G --> H
+
+    M --> L --> K
+    K <-->|Top-K Retrieval| H
+    N <-->|Computation| H
+    O <-->|Similar Problems| P --> H
+    Q --> H
+
+    H --> I
+    I --> R
+    R -->|Yes| S
+    R -->|No| J
+    S --> J
+
+    J --> T & U & V & W & X
+    Y -->|Feedback| O
+    O --> Q
+
+    style INPUT fill:#e8f4f8,stroke:#90caf9
+    style AGENTS fill:#f3e5f5,stroke:#ce93d8
+    style RAG fill:#e8f5e9,stroke:#a5d6a7
+    style MEMORY fill:#fff3e0,stroke:#ffcc80
+    style UI fill:#fce4ec,stroke:#f48fb1
+    style HITL_INPUT fill:#fffde7,stroke:#fff176
+    style HITL_VERIFY fill:#fffde7,stroke:#fff176

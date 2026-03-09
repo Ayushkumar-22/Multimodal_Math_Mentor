@@ -56,8 +56,8 @@ class Config:
     ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "").strip()
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
     HF_API_KEY = os.getenv("HF_API_KEY", "").strip()
-    LLM_PROVIDER = os.getenv("LLM_PROVIDER", "huggingface").strip()
-    LLM_MODEL = os.getenv("LLM_MODEL", "TinyLlama/TinyLlama-1.1B-Chat-v1.0").strip()
+    LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai").strip()
+    LLM_MODEL = os.getenv("LLM_MODEL", "gpt-4o").strip()
 
     # Embeddings
     EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "local")
